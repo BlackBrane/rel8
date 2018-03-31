@@ -15,6 +15,9 @@ import qualified Opaleye.Internal.HaskellDB.PrimQuery as O
 -- | Interpret a 'Table' as Haskell values.
 data QueryResult column
 
+-- | Interpret a 'Table' as Haskell values to be inserted.
+data In a
+
 
 --------------------------------------------------------------------------------
 -- Used to indicate that we will be inserting values. If columns are marked as
@@ -61,6 +64,8 @@ type family C f columnName hasDefault columnType :: * where
   C SchemaInfo name hasDefault t = SchemaInfo '(name, hasDefault, t)
   C Insert name 'HasDefault t = Default (Expr t)
   C Insert name 'NoDefault t = Expr t
+  C In name 'HasDefault t = Maybe t
+  C In name 'NoDefault t = t
   C Aggregate name _ t = Aggregate t
 
 -- | @Anon@ can be used to define columns like 'C', but does not contain the

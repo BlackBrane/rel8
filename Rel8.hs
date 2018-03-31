@@ -103,7 +103,7 @@ module Rel8
   , delete
 
     -- * Interpretations
-  , QueryResult, SchemaInfo
+  , QueryResult, SchemaInfo, In
 
     -- * Re-exported symbols
   , Connection, Stream, Of, Generic
