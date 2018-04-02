@@ -1,5 +1,6 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FunctionalDependencies #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -9,6 +10,7 @@ module Rel8.Internal.Operators where
 import Data.Int (Int16, Int32, Int64)
 import Data.Text (Text)
 import Data.Time (UTCTime, LocalTime, Day)
+import Data.Vector (Vector)
 import qualified Database.PostgreSQL.Simple.Range as PGSR
 import qualified Opaleye.Internal.HaskellDB.PrimQuery as O
 import qualified Opaleye.Operators as O
@@ -18,7 +20,7 @@ import Rel8.Internal.DBType
 import Rel8.Internal.Expr
 
 --------------------------------------------------------------------------------
-infix 4 ==.,  <. , <=. , >. , >=.
+infix 4 ==.,  <. , <=. , >. , >=., <@., @>.
 infixr 2 ||.
 infixr 3 &&.
 
@@ -116,3 +118,24 @@ case_ cases defaultCase =
              (exprToColumn (toNullable predicate), exprToColumn when))
           cases)
        (exprToColumn defaultCase))
+
+--------------------------------------------------------------------------------
+-- | Types which can decide if one value contains another
+class DBContains x xs | xs -> x where
+  -- | Is the left operand contained within the right?
+  (<@.) :: Expr x -> Expr xs -> Expr Bool
+  Expr x <@. Expr xs = Expr (O.BinExpr (O.:<@) x xs)
+
+  -- | Is the right operand contained within the left?
+  (@>.) :: Expr xs -> Expr x -> Expr Bool
+  Expr xs @>. Expr x = Expr (O.BinExpr (O.:@>) xs x)
+
+instance DBContains UTCTime   (PGSR.PGRange UTCTime)
+instance DBContains LocalTime (PGSR.PGRange LocalTime)
+instance DBContains Day       (PGSR.PGRange Day)
+instance DBContains Int       (PGSR.PGRange Int)
+instance DBContains Int64     (PGSR.PGRange Int64)
+
+instance DBContains (Vector a) (Vector a)
+
+-- possible instance: JSONB JSONB
