@@ -24,6 +24,12 @@ data Insert a = InsertExpr (Expr a)
 
 
 --------------------------------------------------------------------------------
+-- | Interpret a 'Table' as Haskell values to be inserted. If columns are marked as
+-- having a default value, it will be possible to use 'Default' instead of
+-- supplying a value.
+data In a
+
+--------------------------------------------------------------------------------
 -- | Used internal to reflect the schema of a table from types into values.
 data SchemaInfo a =
   SchemaInfo String
@@ -41,6 +47,7 @@ data SchemaInfo a =
 data Default a
   = OverrideDefault a
   | InsertDefault
+  deriving Show
 
 --------------------------------------------------------------------------------
 {-| All metadata about a column in a table.
@@ -61,6 +68,8 @@ type family C f columnName hasDefault columnType :: * where
   C SchemaInfo name hasDefault t = SchemaInfo '(name, hasDefault, t)
   C Insert name 'HasDefault t = Default (Expr t)
   C Insert name 'NoDefault t = Expr t
+  C In name 'HasDefault t = Default t
+  C In name 'NoDefault t = t
   C Aggregate name _ t = Aggregate t
 
 -- | @Anon@ can be used to define columns like 'C', but does not contain the
