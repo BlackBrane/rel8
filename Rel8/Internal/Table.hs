@@ -482,5 +482,18 @@ instance (AggregateTable a a', AggregateTable b b', AggregateTable c c') =>
          AggregateTable (a, b, c) (a', b', c')
 instance (AggregateTable a a', AggregateTable b b', AggregateTable c c', AggregateTable d d') =>
          AggregateTable (a, b, c, d) (a', b', c', d')
-instance (AggregateTable a a', AggregateTable b b', AggregateTable c c', AggregateTable d d', AggregateTable e e') =>
+instance
+    ( AggregateTable a a'
+    , AggregateTable b b'
+    , AggregateTable c c'
+    , AggregateTable d d'
+    , AggregateTable e e') =>
          AggregateTable (a, b, c, d, e) (a', b', c', d', e')
+instance
+    ( AggregateTable a a'
+    , AggregateTable b b'
+    , AggregateTable c c'
+    , AggregateTable d d'
+    , AggregateTable e e'
+    , AggregateTable f f') =>
+         AggregateTable (a, b, c, d, e, f) (a', b', c', d', e', f')
