@@ -87,11 +87,11 @@ query is "valid" for aggregation. In Rel8, the above could be written as::
   aggregateWidgets :: Query (Widget Expr)
   aggregateWidgets = aggregate $ proc _ -> do
     widget <- queryTable -< ()
-    returnA -< Widget { style = groupBy
-                      , color = groupBy
-                      , location = count
-                      , quantity = sum
-                      , radius = avg
+    returnA -< Widget { style = groupBy $ style widget
+                      , color = groupBy $ color widget
+                      , location = count $ location widget
+                      , quantity = sum $ quantity widget
+                      , radius = avg $ radius widget
                       }
 
   instance AggregateTable (Widget Aggregate) (Widget Expr)
