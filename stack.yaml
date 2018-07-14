@@ -1,9 +1,11 @@
-resolver: nightly-2018-06-29
+resolver: lts-12.0
 
 packages:
   - .
 
 extra-deps:
+    - lens-4.17
+
     - git: git://github.com/fieldstrength/streaming-postgresql-simple
       commit: 32fe9d7f177e35ebaee1d00b1d83d9226acaa671
     - git: git://github.com/tomjaguarpaw/haskell-opaleye
