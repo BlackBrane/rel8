@@ -10,6 +10,7 @@ module Rel8.Internal.Operators where
 import Data.Int (Int16, Int32, Int64)
 import Data.Text (Text)
 import Data.Time (UTCTime, LocalTime, Day)
+import Data.Typeable (Typeable)
 import Data.Vector (Vector)
 import qualified Database.PostgreSQL.Simple.Range as PGSR
 import qualified Opaleye.Internal.HaskellDB.PrimQuery as O
@@ -79,6 +80,7 @@ instance DBEq (PGSR.PGRange Day) where
 instance DBEq (PGSR.PGRange Int) where
 instance DBEq (PGSR.PGRange Int64) where
 instance DBEq a => DBEq (Maybe a) where
+instance (DBEq a, Typeable a) => DBEq (Vector a) where
 
 --------------------------------------------------------------------------------
 class DBEq a => DBOrd a where
