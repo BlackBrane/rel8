@@ -65,6 +65,7 @@ class DBType a => DBEq a where
 instance DBEq Bool where
 instance DBEq Char where
 instance a ~ Char => DBEq [a] where
+instance DBEq Day where
 instance DBEq Double where
 instance DBEq Float where
 instance DBEq Int16 where
@@ -99,6 +100,7 @@ class DBEq a => DBOrd a where
 
 instance DBOrd Bool where
 instance DBOrd Char where
+instance DBOrd Day where
 instance DBOrd Double where
 instance DBOrd Float where
 instance DBOrd Int16 where
