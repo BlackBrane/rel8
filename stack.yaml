@@ -1,9 +1,12 @@
-resolver: lts-11.7
+resolver: lts-12.0
 
 packages:
   - .
 
 extra-deps:
+    - lens-4.17
 
-    - git: git://github.com/BlackBrane/streaming-postgresql-simple
-      commit: 0362852c1c503d625692797b8f738ff86fa20e0b
+    - git: git://github.com/fieldstrength/streaming-postgresql-simple
+      commit: 32fe9d7f177e35ebaee1d00b1d83d9226acaa671
+    - git: git://github.com/tomjaguarpaw/haskell-opaleye
+      commit: master

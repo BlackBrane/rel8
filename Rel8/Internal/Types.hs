@@ -99,7 +99,7 @@ type family Anon f columnType :: * where
   Anon QueryResult t = t
   Anon Aggregate t = Aggregate t
 
-newtype Limit f = Limit
+newtype Limit (f :: * -> *) = Limit
   { runLimit :: forall a. f a
   }
 
