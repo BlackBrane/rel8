@@ -18,6 +18,8 @@ import Prelude hiding (not, (.), id)
 import Rel8.Internal.DBType
 import Rel8.Internal.Expr
 import Rel8.Internal.Types
+import Data.Vector (Vector)
+
 
 --------------------------------------------------------------------------------
 -- | The class of data types that can be aggregated under the @avg@ operation.
@@ -101,7 +103,7 @@ boolAnd :: Expr Bool -> Aggregate Bool
 boolAnd (Expr a) = Aggregate (Just (O.AggrBoolAnd, [], O.AggrAll)) a
 
 -- | Aggregate with @array_agg@.
-arrayAgg :: Expr a -> Aggregate [a]
+arrayAgg :: Expr a -> Aggregate (Vector a)
 arrayAgg (Expr a) = Aggregate (Just (O.AggrArr, [], O.AggrAll)) a
 
 -- | Aggregate with @string_agg@.
