@@ -19,6 +19,7 @@ import qualified Opaleye.PGTypes as O
 import Prelude hiding (not)
 import Rel8.Internal.DBType
 import Rel8.Internal.Expr
+import Rel8.Internal.Table
 
 --------------------------------------------------------------------------------
 infix 4 ==.,  <. , <=. , >. , >=., <@., @>.
@@ -111,6 +112,11 @@ instance DBOrd Int64 where
 instance DBOrd Text where
 instance DBOrd UTCTime where
 instance DBOrd a => DBOrd (Maybe a) where
+  x <.  y = nullable (lit False) id $ liftOpNull (<.)  x y
+  x <=. y = nullable (lit False) id $ liftOpNull (<=.) x y
+  x >.  y = nullable (lit False) id $ liftOpNull (>.)  x y
+  x >=. y = nullable (lit False) id $ liftOpNull (>=.) x y
+
 
 -- | Case statement. @case_ [(x,a), (y, b)] c@ corresponds to
 -- @CASE WHEN x THEN a WHEN y THEN b ELSE c END@.
