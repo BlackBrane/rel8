@@ -1,12 +1,13 @@
-resolver: lts-12.0
+resolver: lts-17.5
 
 packages:
   - .
 
+allow-newer: true
 extra-deps:
-    - lens-4.17
+  - streaming-postgresql-simple-0.2.0.5
+  - opaleye-0.6.7003.1
+    # This is not the latest opaleye
+    # Not necessarily even the latest one that works
+    # Try increasing me
 
-    - git: git://github.com/fieldstrength/streaming-postgresql-simple
-      commit: 32fe9d7f177e35ebaee1d00b1d83d9226acaa671
-    - git: git://github.com/tomjaguarpaw/haskell-opaleye
-      commit: master

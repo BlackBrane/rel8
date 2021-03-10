@@ -34,9 +34,9 @@ library
                      , free
                      , mtl
                      , one-liner >=0.9 && <1.1
-                     , opaleye >= 0.6.0.0 && < 0.7.1
+                     , opaleye >= 0.6.0.0 && < 0.8
                      , postgresql-simple
-                     , profunctors >=5.2 && <5.3
+                     , profunctors >=5.2 && <5.6
                      , resourcet >= 1.2
                      , scientific
                      , monad-control >= 1.0.1.0 && < 1.1
